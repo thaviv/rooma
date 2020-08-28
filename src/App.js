@@ -1,26 +1,34 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Component } from 'react';
+import logo from './logo.png';
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          I'm back bitches! Hey!!!
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  constructor() {
+    super();
+    this.state = {
+      data: []
+    };
+  }
+
+  componentDidMount() {
+    fetch('https://jsonplaceholder.typicode.com/users')
+      .then(response => response.json()) // first we getting promise from the site and converting it to JSON file so we can read the data.
+      .then(users => this.setState({ data: users })); //adding the date to our state.
+  }
+
+
+
+  render() {
+    return (
+      <div className="App">
+        {this.state.data.map(user => (
+          <h1 key={user.key}>{user.name}</h1>
+        ))}
+      </div>
+    );
+  }
 }
+
+
 
 export default App;
